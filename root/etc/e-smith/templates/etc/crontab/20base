@@ -1,0 +1,60 @@
+{
+use esmith::ConfigDB;
+use esmith::DB;
+
+my $cdb = esmith::ConfigDB->open_ro('/var/lib/nethserver/db/crontab') 
+                        || esmith::ConfigDB->create('/var/lib/nethserver/db/crontab');
+
+    foreach my $cronName ($cdb->get_all_by_prop('type', 'cron')) {
+
+    my $status = $cronName->prop('status')|| '';
+    next unless $status eq 'enabled';
+
+    my $name    = $cronName->key;
+    my $minute  = $cronName->prop('Minute')|| '0';
+    my $hour    = $cronName->prop('Hour')|| '0';
+    my $day     = $cronName->prop('Day')|| '';
+    my $month   = $cronName->prop('Month')|| '';
+    my $weekday = $cronName->prop('WeekDay') || '';
+    my $user    = $cronName->prop('User')|| '';
+    my $cmd     = $cronName->prop('Cmd')|| '';
+
+    my $everyminute  = $cronName->prop('EveryMinute') || 'disabled';
+    my $everyhour    = $cronName->prop('EveryHour') || 'disabled';
+    my $everyday     = $cronName->prop('EveryDay') || 'disabled';
+    my $everymonth   = $cronName->prop('EveryMonth') || 'disabled';
+    my $everyweekday = $cronName->prop('EveryWeekDay') || 'disabled';
+
+    my $eachxminute  = $cronName->prop('EachXMinute') || 'disabled';
+    my $eachxhour    = $cronName->prop('EachXHour') || 'disabled';
+    my $eachxday     = $cronName->prop('EachXDay') || 'disabled';
+    my $eachxmonth   = $cronName->prop('EachXMonth') || 'disabled';
+    my $eachxweekday = $cronName->prop('EachXWeekDay') || 'disabled';
+
+
+
+    $OUT .="\n## cron for $name\n";
+    $OUT .="* " if ($everyminute ne 'disabled');
+    $OUT .="*/" if (($everyminute eq 'disabled') && ($eachxminute  ne 'disabled'));
+    $OUT .="$minute " if ($everyminute eq 'disabled');
+    
+    $OUT .="* " if ($everyhour ne 'disabled');
+    $OUT .="*/" if (($everyhour eq 'disabled') && ($eachxhour  ne 'disabled'));
+    $OUT .="$hour " if ($everyhour eq 'disabled');
+    
+    $OUT .="* " if ($everyday ne 'disabled');
+    $OUT .="*/" if (($everyday eq 'disabled') && ($eachxday ne 'disabled'));
+    $OUT .="$day " if ($everyday eq 'disabled');
+    
+    $OUT .="* " if ($everymonth ne 'disabled');
+    $OUT .="*/" if (($everymonth eq 'disabled') && ($eachxmonth  ne 'disabled'));
+    $OUT .="$month " if ($everymonth eq 'disabled');
+    
+    $OUT .="* " if ($everyweekday ne 'disabled');
+    $OUT .="*/" if (($everyweekday eq 'disabled') && ($eachxweekday  ne 'disabled'));
+    $OUT .="$weekday " if ($everyweekday eq 'disabled');
+    
+    $OUT .=" $user $cmd \n";
+
+    }
+}
