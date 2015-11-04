@@ -40,6 +40,11 @@ echo $view->panel()
     ->insert($view->checkBox('EachXWeekDay','*/', $view::LABEL_LEFT)->setAttribute('uncheckedValue', 'disabled'))
     ->insert ($view->selector('WeekDay', $view::SELECTOR_DROPDOWN | $view::LABEL_RIGHT))))
 
+->insert($view->fieldset('', $view::FIELDSET_EXPANDABLE)->setAttribute('template', $T('Advanced_label'))
+    ->insert ($view->columns()
+    ->insert ($view->textInput('AdvancedCron'))
+    ->insert ($view->textInput('AdvancedUser'))))
+
     ->insert ($view->columns()
 ->insert ($view->selector('User', $view::SELECTOR_DROPDOWN)->setAttribute('label', $T('User_Label_Dropdown') ))
 ->insert ($view->textArea('Cmd',$view::LABEL_ABOVE)->setAttribute('dimensions', '2x100')))

@@ -15,7 +15,9 @@ my $cdb = esmith::ConfigDB->open_ro('/var/lib/nethserver/db/crontab')
     my $hour    = $cronName->prop('Hour')|| '0';
     my $day     = $cronName->prop('Day')|| '';
     my $month   = $cronName->prop('Month')|| '';
+    $month      =~ s/m//;
     my $weekday = $cronName->prop('WeekDay') || '';
+    $weekday    =~ s/w//;
     my $user    = $cronName->prop('User')|| '';
     my $cmd     = $cronName->prop('Cmd')|| '';
 
@@ -31,30 +33,39 @@ my $cdb = esmith::ConfigDB->open_ro('/var/lib/nethserver/db/crontab')
     my $eachxmonth   = $cronName->prop('EachXMonth') || 'disabled';
     my $eachxweekday = $cronName->prop('EachXWeekDay') || 'disabled';
 
+    my $advancedcron = $cronName->prop('AdvancedCron') || '';
+    my $advanceduser = $cronName->prop('AdvancedUser') || '';
 
 
     $OUT .="\n## cron for $name\n";
-    $OUT .="* " if ($everyminute ne 'disabled');
-    $OUT .="*/" if (($everyminute eq 'disabled') && ($eachxminute  ne 'disabled'));
-    $OUT .="$minute " if ($everyminute eq 'disabled');
-    
-    $OUT .="* " if ($everyhour ne 'disabled');
-    $OUT .="*/" if (($everyhour eq 'disabled') && ($eachxhour  ne 'disabled'));
-    $OUT .="$hour " if ($everyhour eq 'disabled');
-    
-    $OUT .="* " if ($everyday ne 'disabled');
-    $OUT .="*/" if (($everyday eq 'disabled') && ($eachxday ne 'disabled'));
-    $OUT .="$day " if ($everyday eq 'disabled');
-    
-    $OUT .="* " if ($everymonth ne 'disabled');
-    $OUT .="*/" if (($everymonth eq 'disabled') && ($eachxmonth  ne 'disabled'));
-    $OUT .="$month " if ($everymonth eq 'disabled');
-    
-    $OUT .="* " if ($everyweekday ne 'disabled');
-    $OUT .="*/" if (($everyweekday eq 'disabled') && ($eachxweekday  ne 'disabled'));
-    $OUT .="$weekday " if ($everyweekday eq 'disabled');
-    
-    $OUT .=" $user $cmd \n";
 
+    $OUT .="$advancedcron " if ($advancedcron ne '');
+
+    if  ($advancedcron eq '')
+        {
+        $OUT .="* " if ($everyminute ne 'disabled');
+        $OUT .="*/" if (($everyminute eq 'disabled') && ($eachxminute  ne 'disabled'));
+        $OUT .="$minute " if ($everyminute eq 'disabled');
+        
+        $OUT .="* " if ($everyhour ne 'disabled');
+        $OUT .="*/" if (($everyhour eq 'disabled') && ($eachxhour  ne 'disabled'));
+        $OUT .="$hour " if ($everyhour eq 'disabled');
+        
+        $OUT .="* " if ($everyday ne 'disabled');
+        $OUT .="*/" if (($everyday eq 'disabled') && ($eachxday ne 'disabled'));
+        $OUT .="$day " if ($everyday eq 'disabled');
+        
+        $OUT .="* " if ($everymonth ne 'disabled');
+        $OUT .="*/" if (($everymonth eq 'disabled') && ($eachxmonth  ne 'disabled'));
+        $OUT .="$month " if ($everymonth eq 'disabled');
+        
+        $OUT .="* " if ($everyweekday ne 'disabled');
+        $OUT .="*/" if (($everyweekday eq 'disabled') && ($eachxweekday  ne 'disabled'));
+        $OUT .="$weekday " if ($everyweekday eq 'disabled');
+        }
+
+    $OUT .="$advanceduser $cmd\n" if ($advanceduser ne '');
+
+    $OUT .=" $user $cmd\n" if ($advanceduser eq '');
     }
 }
