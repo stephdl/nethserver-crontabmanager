@@ -20,7 +20,7 @@ class CronTab extends \Nethgui\Controller\TableController
     {
         $columns = array(
             'Key',
-            'User',
+            'Advanced',
             'status',
             'Actions',
            );

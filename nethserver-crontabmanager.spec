@@ -1,6 +1,6 @@
 Summary: NethServer configuration for crontab
 %define name nethserver-crontabmanager
-%define version 0.0.1
+%define version 0.0.3
 %define release 1
 Name: %{name}
 Version: %{version}
@@ -38,6 +38,10 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 
 %changelog
+* Thu Nov 5 2015 Stephane de Labrusse <stephdl@de-labrusse.fr> - 0.0.3-ns6
+- Added help page
+- Added manual settings for User and Time
+
 * Thu Oct 29 2015 Stephane de Labrusse <stephdl@de-labrusse.fr> - 0.0.1-ns6
 - Initial release
 
