@@ -47,8 +47,10 @@ echo $view->panel()
     ->insert ($view->textInput('AdvancedCron'))
     ->insert ($view->textInput('AdvancedUser'))))
 
-->insert ($view->textArea('Cmd',$view::LABEL_ABOVE)->setAttribute('dimensions', '2x100'))
+->insert ($view->columns()
+    ->insert ($view->textArea('Cmd',$view::LABEL_ABOVE)->setAttribute('dimensions', '2x100'))
+    ->insert($view->checkBox('Mail','enabled')->setAttribute('uncheckedValue', 'disabled')
+            ->setAttribute('label', $T('Mail_label_checkbox'))))
 ;
-
 
 echo $view->buttonList($view::BUTTON_SUBMIT | $view::BUTTON_CANCEL | $view::BUTTON_HELP);

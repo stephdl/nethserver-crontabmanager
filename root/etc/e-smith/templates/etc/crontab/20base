@@ -20,6 +20,7 @@ my $cdb = esmith::ConfigDB->open_ro('/var/lib/nethserver/db/crontab')
     $weekday    =~ s/w//;
     my $user    = $cronName->prop('User')|| '';
     my $cmd     = $cronName->prop('Cmd')|| '';
+    my $mail    = $cronName->prop('Mail') || 'enabled';
 
     my $everyminute  = $cronName->prop('EveryMinute') || 'disabled';
     my $everyhour    = $cronName->prop('EveryHour') || 'disabled';
@@ -61,13 +62,14 @@ my $cdb = esmith::ConfigDB->open_ro('/var/lib/nethserver/db/crontab')
         $OUT .="* " if ($everyweekday ne 'disabled');
         $OUT .="*/" if (($everyweekday eq 'disabled') && ($eachxweekday  ne 'disabled'));
         $OUT .="$weekday " if ($everyweekday eq 'disabled');
-        $OUT .=" $user $cmd\n";
+        $OUT .=" $user $cmd\n" if ($mail eq 'enabled');
+        $OUT .=" $user $cmd " . '>/dev/null 2>&1' . "\n" if ($mail eq 'disabled');
         }
 
     elsif  ($advanced eq 'enabled')
         {
-        $OUT .="$advancedcron $advanceduser $cmd\n";
+        $OUT .="$advancedcron $advanceduser $cmd\n" if ($mail eq 'enabled');
+        $OUT .="$advancedcron $advanceduser $cmd " . '>/dev/null 2>&1' . "\n" if ($mail eq 'disabled');
         }
-
     }
 }

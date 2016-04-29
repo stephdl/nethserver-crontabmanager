@@ -40,6 +40,7 @@ class Modify extends \Nethgui\Controller\Table\Modify
             array('User', Validate::ANYTHING, \Nethgui\Controller\Table\Modify::FIELD),
             array('Cmd', Validate::NOTEMPTY, \Nethgui\Controller\Table\Modify::FIELD),
             array('status', Validate::SERVICESTATUS, \Nethgui\Controller\Table\Modify::FIELD),
+            array('Mail', Validate::SERVICESTATUS, \Nethgui\Controller\Table\Modify::FIELD),
 
             array('EveryMinute', $every, \Nethgui\Controller\Table\Modify::FIELD),
             array('EveryHour', $every, \Nethgui\Controller\Table\Modify::FIELD),
@@ -62,6 +63,7 @@ class Modify extends \Nethgui\Controller\Table\Modify
         $this->setSchema($parameterSchema);
 
         $this->setDefaultValue('status','enabled');
+        $this->setDefaultValue('Mail','enabled');
         $this->setDefaultValue('EveryMinute','*');
         $this->setDefaultValue('EveryHour','*');
         $this->setDefaultValue('EveryDay','*');
@@ -76,6 +78,18 @@ class Modify extends \Nethgui\Controller\Table\Modify
 
         parent::initialize();
     }
+
+    public function validate(\Nethgui\Controller\ValidationReportInterface $report)
+    {
+        #test if the key exists
+        $keyExists = $this->getPlatform()->getDatabase('crontab')->getType($this->parameters['Name']) != '';
+        if($this->getIdentifier() === 'create' && $keyExists) {
+        $report->addValidationErrorMessage($this, 'Name', 'Service_key_exists_message');
+        }
+        parent::validate($report);
+    }
+
+
 
     public function provideMembersDatasource()
     {

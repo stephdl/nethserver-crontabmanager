@@ -57,3 +57,6 @@ $L['AdvancedCron_label'] = 'Set the time of the job';
 $L['AdvancedUser_label'] = 'Set the user who runs the job';
 $L['Advanced_disabled_label'] = 'Simplified Settings';
 $L['Advanced_enabled_label'] = 'Advanced Settings';
+$L['Mail_label_checkbox'] = 'Email notifications to root';
+$L['Service_key_exists_message'] = 'This name is already used';
+
