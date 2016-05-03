@@ -1,6 +1,6 @@
 Summary: NethServer configuration for crontab
 %define name nethserver-crontabmanager
-%define version 0.0.4
+%define version 0.0.5
 %define release 1
 Name: %{name}
 Version: %{version}
@@ -38,6 +38,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 
 %changelog
+* Tue May 3 2016 Stephane de Labrusse <stephdl@de-labrusse.fr> - 0.0.5-ns6
+- changed the path in the header of the crontab
+
 * Fri Apr 29 2016 Stephane de Labrusse <stephdl@de-labrusse.fr> - 0.0.4-ns6
 - Validation if the cron name is not already used in the crontab database
 - the email notification can be disabled for each cron job
