@@ -1,6 +1,6 @@
 Summary: NethServer configuration for crontab
 %define name nethserver-crontabmanager
-%define version 0.0.5
+%define version 0.0.6
 %define release 1
 Name: %{name}
 Version: %{version}
@@ -10,7 +10,6 @@ Source: %{name}-%{version}.tar.gz
 BuildArch: noarch
 URL: http://dev.nethserver.org/projects/nethforge/wiki/%{name}
 BuildRequires: nethserver-devtools
-AutoReq: no
 
 %description
 NethServer configuration for ddclient
@@ -25,6 +24,10 @@ NethServer configuration for ddclient
 %{makedocs}
 perl createlinks
 
+for _nsdb in crontab; do
+   mkdir -p root/%{_nsdbconfdir}/${_nsdb}/{migrate,force,defaults}
+done 
+
 %install
 rm -rf $RPM_BUILD_ROOT
 (cd root   ; find . -depth -print | cpio -dump $RPM_BUILD_ROOT)
@@ -37,7 +40,13 @@ rm -rf $RPM_BUILD_ROOT
 %files -f e-smith-%{version}-filelist
 %defattr(-,root,root)
 
+%dir %{_nseventsdir}/%{name}-update
+%dir %{_nsdbconfdir}/crontab
+
 %changelog
+* Sun Sep 24 2016 Stephane de Labrusse <stephdl@de-labrusse.fr> - 0.0.6-ns6
+- Rebuild for NS7
+
 * Tue May 3 2016 Stephane de Labrusse <stephdl@de-labrusse.fr> - 0.0.5-ns6
 - changed the path in the header of the crontab
 
