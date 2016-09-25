@@ -29,7 +29,6 @@ class Modify extends \Nethgui\Controller\Table\Modify
            $eachX = $this->createValidator()->memberOf('*/','disabled');
 
         $parameterSchema = array(
-            array('UserDatasource', FALSE, array($this, 'provideMembersDatasource')), // this parameter will never be submitted: set an always-failing validator
 
             array('Name', Validate::NOTEMPTY, \Nethgui\Controller\Table\Modify::KEY),
             array('Minute', $this->createValidator()->integer()->lessThan(60) , \Nethgui\Controller\Table\Modify::FIELD),
@@ -61,7 +60,8 @@ class Modify extends \Nethgui\Controller\Table\Modify
         );
 
         $this->setSchema($parameterSchema);
-
+        $this->setDefaultValue('AdvancedUser','root');
+        $this->setDefaultValue('User','root');
         $this->setDefaultValue('status','enabled');
         $this->setDefaultValue('Mail','enabled');
         $this->setDefaultValue('EveryMinute','*');
@@ -90,25 +90,6 @@ class Modify extends \Nethgui\Controller\Table\Modify
     }
 
 
-
-    public function provideMembersDatasource()
-    {
-        $platform = $this->getPlatform();
-        if (is_null($platform)) {
-            return array();
-        }
-
-        $users = $platform->getTableAdapter('accounts', 'user');
-
-        $values = array();
-
-        // Build the datasource rows couples <key, label>
-        foreach ($users as $username => $row) {
-            $values[] = array($username, sprintf('%s %s (%s)', $row['FirstName'], $row['LastName'], $username));
-        }
-        array_unshift($values, array('root', sprintf('%s %s (%s)', 'Master','Administrator', 'root')));
-        return $values;
-    }
 
     public function prepareView(\Nethgui\View\ViewInterface $view)
     {
