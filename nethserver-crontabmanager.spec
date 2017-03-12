@@ -1,7 +1,7 @@
 Summary: NethServer configuration for crontab
 %define name nethserver-crontabmanager
 %define version 0.0.5
-%define release 1
+%define release 2
 Name: %{name}
 Version: %{version}
 Release: %{release}%{?dist}
@@ -36,8 +36,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f e-smith-%{version}-filelist
 %defattr(-,root,root)
+%doc COPYING
 
 %changelog
+* Sun Mar 12 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> 0.0.5-2.ns6
+- GPL license
+
 * Tue May 3 2016 Stephane de Labrusse <stephdl@de-labrusse.fr> - 0.0.5-ns6
 - changed the path in the header of the crontab
 
