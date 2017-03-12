@@ -1,7 +1,7 @@
 Summary: NethServer configuration for crontab
 %define name nethserver-crontabmanager
 %define version 0.0.7
-%define release 1
+%define release 2
 Name: %{name}
 Version: %{version}
 Release: %{release}%{?dist}
@@ -39,11 +39,14 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f e-smith-%{version}-filelist
 %defattr(-,root,root)
-
+%doc COPYING
 %dir %{_nseventsdir}/%{name}-update
 %dir %{_nsdbconfdir}/crontab
 
 %changelog
+* Sun Mar 12 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> - 0.0.7-2.ns7
+- GPL license
+
 * Sun Sep 24 2016 Stephane de Labrusse <stephdl@de-labrusse.fr> - 0.0.7-ns6
 - Removed the dropdown menu of user
 
