@@ -1,7 +1,7 @@
 Summary: NethServer configuration for crontab
 %define name nethserver-crontabmanager
-%define version 0.0.7
-%define release 2
+%define version 0.1.1
+%define release 1
 Name: %{name}
 Version: %{version}
 Release: %{release}%{?dist}
@@ -44,6 +44,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_nsdbconfdir}/crontab
 
 %changelog
+* Wed Aug 02 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> 0.1.1-1.ns7
+- Translation of the property value in the crontab table
+
 * Sun Mar 12 2017 Stephane de Labrusse <stephdl@de-labrusse.fr> - 0.0.7-2.ns7
 - GPL license
 
