@@ -37,6 +37,20 @@ class CronTab extends \Nethgui\Controller\TableController
         parent::initialize();
     }
 
+    public function prepareViewForColumnAdvanced(\Nethgui\Controller\Table\Read $action, \Nethgui\View\ViewInterface $view, $key, $values, &$rowMetadata)
+    {
+        if ($values['Advanced'] == 'enabled') {
+            return $view->translate('Enabled_label');
+        }
+        return $view->translate('Disabled_label');
+    }
 
+    public function prepareViewForColumnstatus(\Nethgui\Controller\Table\Read $action, \Nethgui\View\ViewInterface $view, $key, $values, &$rowMetadata)
+    {
+        if ($values['status'] == 'enabled') {
+            return $view->translate('Enabled_label');
+        }
+        return $view->translate('Disabled_label');
+    }
 }
 
