@@ -2,7 +2,7 @@
     <div>
         <h2>{{$t('logs.title')}}</h2>
         <h3>
-            <pre id="log-file" class="monospace m-right-sm">{{!view.follow ? 'tail -'+view.lines+' /var/log/messages' : 'tail -f /var/log/messages'}}</pre>
+            <pre id="log-file" class="monospace m-right-sm">{{!view.follow ? 'tail -'+view.lines+' /var/log/cron' : 'tail -f /var/log/cron'}}</pre>
             <button @click="handleLogs()" class="btn btn-primary">{{view.follow ? $t('logs.stop_follow') : $t('logs.follow')}}</button>
         </h3>
         <div v-if="!view.logsLoaded" id="loader" class="spinner spinner-lg view-spinner"></div>
@@ -40,7 +40,7 @@ export default {
           action: this.view.follow ? "follow" : "dump",
           lines: this.view.follow ? null : this.view.lines,
           mode: "file",
-          paths: ["/var/log/fail2ban.log"]
+          paths: ["/var/log/cron"]
         },
         this.view.follow
           ? function(stream) {
