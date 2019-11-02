@@ -29,14 +29,13 @@ use NethServer::ApiTools;
 my $eventName = 'nethserver-crontabmanager-update';
 my @eventArgs = ();
 my $ret;
+
 my $db = esmith::ConfigDB->open('crontab');
-
 my $input = NethServer::ApiTools::readInput();
-my $cmd = $input->{'action'};
 
-if ($cmd eq 'update') {
-    foreach (qw(
-       status
+my $props = {type => 'cron', 'status' => 'enabled'};
+
+foreach (qw(
        User
        Advanced
        EveryMonth
@@ -45,20 +44,18 @@ if ($cmd eq 'update') {
        EveryMinute
        Cmd
        EveryDay
-       Mail
-)) {
-        $db->set_prop($input->{'name'}, $_, $input->{$_});
-   }
-} else {
-            NethServer::ApiTools::error();
+       Mail)) {
+    $props->{$_} = $input->{$_};
 }
+
+$db->new_record($input->{'name'}, $props);
 
 esmith::event::set_json_log(1);
 
 if(esmith::event::event_signal($eventName, @eventArgs)) {
     NethServer::ApiTools::success();
 } else {
-    NethServer::ApiTools::error("EventError", "update_action_failed", 1559997785);
-        }
+    NethServer::ApiTools::error("EventError", "create_action_failed", 1559997785);
+}
 
 print encode_json($ret);

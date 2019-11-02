@@ -27,38 +27,25 @@ use JSON;
 use NethServer::ApiTools;
 
 my $eventName = 'nethserver-crontabmanager-update';
-my @eventArgs = ();
 my $ret;
+my @eventArgs;
+
 my $db = esmith::ConfigDB->open('crontab');
-
 my $input = NethServer::ApiTools::readInput();
-my $cmd = $input->{'action'};
 
-if ($cmd eq 'update') {
-    foreach (qw(
-       status
-       User
-       Advanced
-       EveryMonth
-       EveryWeekDay
-       EveryHour
-       EveryMinute
-       Cmd
-       EveryDay
-       Mail
-)) {
-        $db->set_prop($input->{'name'}, $_, $input->{$_});
-   }
-} else {
-            NethServer::ApiTools::error();
+if (!$input->{'name'}) {
+    NethServer::ApiTools::error();
 }
+
+my $record = $db->get($input->{'name'});
+$record->delete();
 
 esmith::event::set_json_log(1);
 
 if(esmith::event::event_signal($eventName, @eventArgs)) {
     NethServer::ApiTools::success();
 } else {
-    NethServer::ApiTools::error("EventError", "update_action_failed", 1559997785);
-        }
+    NethServer::ApiTools::error("EventError", "delete_action_failed", 1559997785);
+}
 
 print encode_json($ret);
