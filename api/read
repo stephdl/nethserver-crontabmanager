@@ -39,6 +39,25 @@ if ($cmd eq 'crontab') {
         my %props = $_->props();
         delete($props{'type'});
         $props{'name'} = $_->key;
+        
+        # for compatibility with nethgui module, 
+        # the prop Every* is removed in the cockpit UI
+        if ( ! $props{'Minute'} && ($props{'EveryMinute'} ne 'disabled' )) {
+            $props{'Minute'}  = $props{'EveryMinute'};
+        }
+        if ( ! $props{'Hour'} && ($props{'EveryHour'} ne 'disabled' )) {
+            $props{'Hour'}  = $props{'EveryHour'};
+        }
+        if ( ! $props{'Day'} && ($props{'EveryDay'} ne 'disabled' )) {
+            $props{'Day'}  = $props{'EveryDay'};
+        }
+        if ( ! $props{'Month'} && ($props{'EveryMonth'} ne 'disabled' )) {
+            $props{'Month'}  = $props{'EveryMonth'};
+        }
+        if ( ! $props{'WeekDay'} && ($props{'EveryWeekDay'} ne 'disabled' )) {
+            $props{'WeekDay'}  = $props{'EveryWeekDay'};
+        }
+
         push(@crontab, \%props);
     }
     $ret->{'crontab'} = \@crontab;
