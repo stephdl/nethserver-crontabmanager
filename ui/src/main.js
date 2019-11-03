@@ -26,8 +26,7 @@ import DocInfo from "./directives/DocInfo.vue";
 import VueGoodTable from "vue-good-table";
 
 import App from './App.vue'
-import Dashboard from './views/Dashboard.vue'
-import Settings from './views/Settings.vue'
+import Crontab from './views/Crontab.vue'
 import Logs from './views/Logs.vue'
 import About from './views/About.vue'
 
@@ -54,14 +53,13 @@ const router = new Router({
     mode: 'hash',
     base: process.env.BASE_URL,
     routes: [
-      { path: '/', redirect: '/dashboard'},
-      { path: '/dashboard', component: Dashboard },
-      { path: '/settings', component: Settings },
+      { path: '/', redirect: '/crontab'},
+      { path: '/crontab', component: Crontab },
       { path: '/logs', component: Logs },
       { path: '/about', name: 'about', component: About },
     ]
 })
-router.replace("/dashboard")
+router.replace("/crontab")
 
 var app = new Vue({
     i18n,
