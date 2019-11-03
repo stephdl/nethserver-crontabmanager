@@ -1,4 +1,3 @@
-
 #!/usr/bin/php
 <?php
 /*
@@ -36,7 +35,7 @@ $cmd = $data['action'];
     }
     $userNameValidator = $v->createValidator(Validate::USERNAME)->platform('user-create');
     $v->declareParameter('name', $userNameValidator);
-    #$v->declareParameter('Chroot', Validate::SERVICESTATUS);
+    $v->declareParameter('Chroot', Validate::SERVICESTATUS);
 
 # Validate the input
 if ($v->validate()) {
