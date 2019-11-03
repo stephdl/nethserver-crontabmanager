@@ -36,15 +36,24 @@ my $input = NethServer::ApiTools::readInput();
 my $props = {type => 'cron', 'status' => 'enabled'};
 
 foreach (qw(
-       User
-       Advanced
-       EveryMonth
-       EveryWeekDay
-       EveryHour
-       EveryMinute
-       Cmd
-       EveryDay
-       Mail)) {
+        status
+        Mail
+        Cmd
+        Month
+        Minute
+        Hour
+        Day
+        WeekDay
+        EveryMonth
+        EveryMinute
+        EveryHour
+        EveryDay
+        EveryWeekDay
+        User
+        Advanced
+        AdvancedCron
+        AdvancedUser
+)) {
     $props->{$_} = $input->{$_};
 }
 

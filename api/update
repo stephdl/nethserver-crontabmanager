@@ -36,19 +36,30 @@ my $cmd = $input->{'action'};
 
 if ($cmd eq 'update') {
     foreach (qw(
-       status
-       User
-       Advanced
-       EveryMonth
-       EveryWeekDay
-       EveryHour
-       EveryMinute
-       Cmd
-       EveryDay
-       Mail
+        status
+        Mail
+        Cmd
+        Month
+        Minute
+        Hour
+        Day
+        WeekDay
+        EveryMonth
+        EveryMinute
+        EveryHour
+        EveryDay
+        EveryWeekDay
+        User
+        Advanced
+        AdvancedCron
+        AdvancedUser
 )) {
-        $db->set_prop($input->{'name'}, $_, $input->{$_});
+    $db->set_prop($input->{'name'}, $_, $input->{$_});
    }
+} elsif ($cmd eq 'enable') {
+    $db->set_prop($input->{'name'}, 'status', 'enabled');
+} elsif ($cmd eq 'disable') {
+    $db->set_prop($input->{'name'}, 'status', 'disabled');
 } else {
             NethServer::ApiTools::error();
 }
