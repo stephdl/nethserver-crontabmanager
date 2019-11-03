@@ -53,6 +53,11 @@ foreach (qw(
         Advanced
         AdvancedCron
         AdvancedUser
+        EachXHour
+        EachXMinute
+        EachXMonth
+        EachXWeekDay
+        EachXDay
 )) {
     $props->{$_} = $input->{$_};
 }

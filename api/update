@@ -53,6 +53,11 @@ if ($cmd eq 'update') {
         Advanced
         AdvancedCron
         AdvancedUser
+        EachXHour
+        EachXMinute
+        EachXMonth
+        EachXWeekDay
+        EachXDay
 )) {
     $db->set_prop($input->{'name'}, $_, $input->{$_});
    }
