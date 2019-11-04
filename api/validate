@@ -33,9 +33,49 @@ $cmd = $data['action'];
             $v->addValidationError('name', 'user_already_exists');
         }
     }
+
+    # validator routines
     $userNameValidator = $v->createValidator(Validate::USERNAME)->platform('user-create');
+    $minutes = $v->createValidator()->orValidator($v->createValidator()->memberOf('*'),
+            $v->createValidator()->integer()->lessThan(60));
+    $hours = $v->createValidator()->orValidator($v->createValidator()->memberOf('*'),
+            $v->createValidator()->integer()->lessThan(24));
+    $days = $v->createValidator()->orValidator($v->createValidator()->memberOf('*'),
+            $v->createValidator()->integer()->greatThan(0)->lessThan(32));
+    $months =  $v->createValidator()->memberOf(array('*','1m','2m', '3m',
+            '4m','5m','6m','7m','8m','9m','10m','11m','12m'));
+    $weekday = $v->createValidator()->memberOf(array('*','1w','2w','3w',
+            '4w','5w','6w','7w'));
+    $every = $v->createValidator()->memberOf('*','disabled');
+    $eachX = $v->createValidator()->memberOf('*/','disabled');
+
+    # Validators
     $v->declareParameter('name', $userNameValidator);
-    $v->declareParameter('Chroot', Validate::SERVICESTATUS);
+    $v->declareParameter('Minute', $minutes);
+    $v->declareParameter('Hour', $hours);
+    $v->declareParameter('Day', $days);
+    $v->declareParameter('Month', $months);
+    $v->declareParameter('WeekDay', $weekday);
+    $v->declareParameter('User', $userNameValidator);
+    $v->declareParameter('Cmd',  Validate::NOTEMPTY);
+    $v->declareParameter('status', Validate::SERVICESTATUS);
+    $v->declareParameter('Mail', Validate::SERVICESTATUS);
+
+    $v->declareParameter('EveryMinute', $every);
+    $v->declareParameter('EveryHour', $every);
+    $v->declareParameter('EveryDay', $every);
+    $v->declareParameter('EveryMonth', $every);
+    $v->declareParameter('EveryWeekDay', $every);
+
+    $v->declareParameter('EachXMinute', $eachX);
+    $v->declareParameter('EachXHour', $eachX);
+    $v->declareParameter('EachXDay', $eachX);
+    $v->declareParameter('EachXMonth', $eachX);
+    $v->declareParameter('EachXWeekDay', $eachX);
+
+    $v->declareParameter('AdvancedCron', Validate::ANYTHING);
+    $v->declareParameter('AdvancedUser', Validate::ANYTHING);
+    $v->declareParameter('Advanced', Validate::SERVICESTATUS);
 
 # Validate the input
 if ($v->validate()) {

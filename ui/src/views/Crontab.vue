@@ -474,13 +474,13 @@
               class="combobox form-control"
             >
               <option value="*">{{$t('crontab.each_Month')}}</option>
-              <option value="0w">{{$t('crontab.sunday')}}</option>
               <option value="1w">{{$t('crontab.monday')}}</option>
               <option value="2w">{{$t('crontab.tuesday')}}</option>
               <option value="3w">{{$t('crontab.wednesday')}}</option>
               <option value="4w">{{$t('crontab.thursday')}}</option>
               <option value="5w">{{$t('crontab.friday')}}</option>
               <option value="6w">{{$t('crontab.saturday')}}</option>
+              <option value="7w">{{$t('crontab.sunday')}}</option>
             </select>
             <span v-if="currentCrontab.errors.WeekDay.hasError" class="help-block">
               {{$t('validation.validation_failed')}}:
