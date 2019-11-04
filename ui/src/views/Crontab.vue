@@ -22,7 +22,7 @@
 
 <template>
   <div>
-    <h2>{{ $t('CronTab.title') }}</h2>
+    <h2>{{ $t('crontab.title') }}</h2>
     <div v-if="!view.isLoaded" class="spinner spinner-lg view-spinner"></div>
     <div v-show="view.isLoaded">
       <h3 v-if="crontab.length > 0">{{$t('crontab.actions')}}</h3>
@@ -59,7 +59,7 @@
           <button
             @click="openCreateCrontab()"
             class="btn btn-primary btn-lg"
-          >{{$t('crontab.create_job')}}</button>
+          >{{$t('crontab.create_cronjob')}}</button>
         </div>
       </div>
 
@@ -119,7 +119,7 @@
             <div class="list-view-pf-body">
               <div class="list-view-pf-description">
                 <div class="list-group-item-heading">{{m.name}}</div>
-                <div class="list-group-item-text">{{$t('crontab.advanced_mode')}} : {{m.Advanced}}</div>
+                <div class="list-group-item-text">{{$t('crontab.mode')}} {{(m.Advanced === 'enabled') ? $t('crontab.advanced'): $t('crontab.simplified') }}</div>
               </div>
               <div class="list-view-pf-additional-info rules-info"></div>
             </div>
@@ -430,7 +430,7 @@
               <option value="2m">{{$t('crontab.february')}}</option>
               <option value="3m">{{$t('crontab.march')}}</option>
               <option value="4m">{{$t('crontab.april')}}</option>
-              <option value="5m">{{$t('crontab.May')}}</option>
+              <option value="5m">{{$t('crontab.may')}}</option>
               <option value="6m">{{$t('crontab.june')}}</option>
               <option value="7m">{{$t('crontab.july')}}</option>
               <option value="8m">{{$t('crontab.august')}}</option>

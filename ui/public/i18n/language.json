@@ -1,9 +1,57 @@
 {
-    "settings": {
-        "title": "Settings"
-    },
-    "jails":{
-        "title": "Jails"
+    "crontab": {
+        "title": "Cron table",
+        "actions": "Actions",
+        "create_cronjob": "Create a new job",
+        "crontab_list": "List",
+        "advanced_mode":"Advanced settings",
+        "edit_cronjob": "Edit the job",
+        "add_cronjob": "Create the job",
+        "jobs_not_found": "We have no cron table",
+        "jobs_not_found_desc": "The cron table is the list of tasks scheduled to run at regular time intervals on the system",
+        "name": "Name",
+        "mode": "Mode",
+        "simplified": "simplified",
+        "advanced": "advanced",
+        "minute": "Minute",
+        "Hour": "Hour",
+        "Day": "Day",
+        "Month": "Month",
+        "WeekDay": "Day of week",
+        "User": "The user of the job",
+        "Cmd": "The command of the job",
+        "mail2root":"Email notifications to root",
+        "AvancedCronTime": "The time of the job",
+        "AdvancedCronUser": "The user of the job",
+        "each_minute": "Run every minute (*)",
+        "each_Hour": "Run every hour (*)",
+        "each_Day": "Run every day (*)",
+        "each_Month": "Run every month (*)",
+        "each_WeekDay": "Run every week of day (*)",
+        "january": "January",
+        "february":"February",
+        "march" : "March",
+        "april": "April",
+        "may": "May",
+        "june": "June",
+        "july": "July",
+        "august": "August",
+        "september": "September",
+        "october": "October",
+        "november": "November",
+        "december": "December",
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wednesday": "Wednesday",
+        "thursday": "Thursday",
+        "friday": "Friday",
+        "saturday": "Saturday",
+        "sunday": "Sunday",
+        "EachXMinute": "Run for every X minutes",
+        "EachXHour": "Run for every X hours",
+        "EachXDay": "Run for every X days",
+        "EachXMonth": "Run for every X months",
+        "EachXWeekDay": "Run for every X day of weeks"
     },
     "about": {
         "title": "About",
@@ -14,8 +62,5 @@
     "title": "Logs",
     "follow": "Follow",
     "stop_follow": "Stop"
-    },
-    "dashboard":{
-        "title": "Dashboard"
     }
 }
