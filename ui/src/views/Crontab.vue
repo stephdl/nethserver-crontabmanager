@@ -72,7 +72,7 @@
           v-bind:key="mk"
           :class="['list-group-item', m.status == 'disabled' ? 'gray' : '']"
         >
-          <div class="list-view-pf-actions">
+          <div v-if="m.User === view.user || view.isAdmin" class="list-view-pf-actions">
             <button
               @click="m.status == 'disabled' ? toggleStatusCrontab(m) : openEditCrontab(m)"
               :class="['btn btn-default', m.status == 'disabled' ? 'btn-primary' : '']"
@@ -112,7 +112,7 @@
             </div>
           </div>
 
-          <div class="list-view-pf-main-info small-list">
+          <div v-if="m.User === view.user || view.isAdmin" class="list-view-pf-main-info small-list">
             <div class="list-view-pf-left">
               <span :class="['fa', 'list-view-pf-icon-sm', 'fa fa-user']"></span>
             </div>
@@ -150,7 +150,7 @@
                   >{{$t('validation.validation_failed')}}: {{$t('validation.'+currentCrontab.errors.name.message)}}</span>
                 </div>
               </div>
-              <div class="form-group">
+              <div v-if="view.isAdmin" class="form-group">
                 <label
                   class="col-sm-3 control-label"
                   for="textInput-modal-markup"
@@ -167,7 +167,7 @@
                     class="col-sm-10 col-xs-10 control-label text-align-left"
                     for="crontab-simplified"
                   >{{$t('crontab.simplified')}}</label>
-                  <input
+                  <input  v-if="view.isAdmin"
                     id="crontab-advanced"
                     class="col-sm-2 col-xs-2"
                     type="radio"
@@ -505,8 +505,9 @@
           >{{$t('crontab.User')}}</label>
           <div :class="'col-sm-9'">
             <input
+              :disabled="!view.isAdmin"
               required
-              placeholder="root"
+              placeholder="User"
               type="text"
               v-model="currentCrontab.User"
               class="form-control"
@@ -517,7 +518,7 @@
             >{{$t('validation.validation_failed')}}: {{$t('validation.'+currentCrontab.errors.User.message)}}</span>
           </div>
         </div>
-        <div v-if="currentCrontab.Advanced ==='enabled'"
+        <div v-if="currentCrontab.Advanced ==='enabled' &&  view.isAdmin"
           :class="['form-group', currentCrontab.errors.AdvancedCron.hasError ? 'has-error' : '']"
         >
           <label
@@ -537,7 +538,7 @@
             >{{$t('validation.validation_failed')}}: {{$t('validation.'+currentCrontab.errors.AdvancedCron.message)}}</span>
           </div>
         </div>
-        <div v-if="currentCrontab.Advanced ==='enabled'"
+        <div v-if="currentCrontab.Advanced ==='enabled'  &&  view.isAdmin"
           :class="['form-group', currentCrontab.errors.AdvancedUser.hasError ? 'has-error' : '']"
         >
           <label
@@ -547,7 +548,7 @@
           <div :class="'col-sm-9'">
             <input
               required
-              placeholder="root"
+              placeholder="User"
               type="text"
               v-model="currentCrontab.AdvancedUser"
               class="form-control"
@@ -570,7 +571,7 @@
                 <div :class="'col-sm-9'">
                   <input
                     required
-                    placeholder="/usr/bin/echo 'Linux is the best OS'"
+                    placeholder="/usr/bin/echo 'Linux is better'"
                     type="text"
                     v-model="currentCrontab.Cmd"
                     class="form-control"
@@ -614,9 +615,9 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title">{{$t('crontab.delete_job')}} {{toDeleteAccount.name}}</h4>
+            <h4 class="modal-title">{{$t('crontab.delete_job')}} {{toDeleteCron.name}}</h4>
           </div>
-          <form class="form-horizontal" v-on:submit.prevent="deleteAccount(toDeleteAccount)">
+          <form class="form-horizontal" v-on:submit.prevent="deleteAccount(toDeleteCron)">
             <div class="modal-body">
               <div class="form-group">
                 <label
@@ -643,6 +644,8 @@ var console = window.console;
 export default {
   name: "Settings",
   mounted() {
+    this.getUser();
+    this.getAdmin();
     this.getCrontab();
   },
   beforeRouteLeave(to, from, next) {
@@ -651,14 +654,18 @@ export default {
   },
   data() {
     return {
-      togglePass: "password",
       view: {
         isLoaded: false,
+        isRoot: false,
+        isAdmin: false,
+        user: null
       },
       searchString: "",
       crontab: [],
       currentCrontab: this.initCrontab(),
-      toDeleteAccount: { name: "" },
+      toDeleteCron: { 
+        name: ""
+      },
     };
   },
   computed: {
@@ -693,11 +700,10 @@ export default {
         errors: this.initCrontabErrors(),
         isLoading: false,
         isEdit: false,
-        User: "root",
+        User: null,
         Advanced: "disabled",
         AdvancedCron: "",
-        AdvancedUser: "root",
-        User: "root",
+        AdvancedUser: null,
         EachXDay: "disabled",
         EachXHour: "disabled",
         EachXMinute: "disabled",
@@ -818,6 +824,48 @@ export default {
         }
       };
     },
+    getUser() {
+      var context = this;
+      context.view.isLoaded = false;
+      nethserver.exec(
+        ["nethserver-crontabmanager/authentication"],
+        null,
+        null,
+        function(success) {
+          try {
+            success = JSON.parse(success);
+          } catch (e) {
+            console.error(e);
+          }
+          context.view.user = success.user;
+        },
+        function(error) {
+          console.error(error);
+        },
+        false
+      );
+    },
+    getAdmin() {
+      var context = this;
+      context.view.isLoaded = false;
+      nethserver.exec(
+        ["system-authorization/read"],
+        null,
+        null,
+        function(success) {
+          try {
+            success = JSON.parse(success);
+          } catch (e) {
+            console.error(e);
+          }
+          context.view.isAdmin = success.status.isAdmin;
+        },
+        function(error) {
+          console.error(error);
+        },
+        false
+      );
+    },
     getCrontab() {
       var context = this;
       context.view.isLoaded = false;
@@ -843,13 +891,14 @@ export default {
       );
     },
     openCreateCrontab() {
-      this.currentCrontab = this.initCrontab();
-      this.currentCrontab.Chroot = this.currentCrontab.Chroot == "enabled";
+      var context = this;
+      context.currentCrontab = context.initCrontab();
+      context.currentCrontab.User = context.view.user;
+      context.currentCrontab.AdvancedUser = context.view.user;
       $("#createCrontabModal").modal("show");
     },
     openEditCrontab(job) {
       this.currentCrontab = JSON.parse(JSON.stringify(job));
-      // this.currentCrontab.Chroot = this.currentCrontab.Chroot == "enabled";
       this.currentCrontab.errors = this.initCrontabErrors();
 
       this.currentCrontab.isEdit = true;
@@ -992,7 +1041,7 @@ export default {
       );
     },
     openDeleteAccount(job) {
-      this.toDeleteAccount = JSON.parse(JSON.stringify(job));
+      this.toDeleteCron = JSON.parse(JSON.stringify(job));
       $("#deleteAccountModal").modal("show");
     },
     deleteAccount(job) {

@@ -1,0 +1,21 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use JSON;
+use POSIX qw(getgroups);
+
+sub whoami
+{
+    my $user = scalar getpwuid $<;
+    # strip domain
+    $user =~ s/@.*$//;
+    return $user;
+}
+
+#my $user = whoami();
+my $ret = {"user" => ""};
+
+$ret->{'user'} = whoami();
+
+print encode_json($ret);
