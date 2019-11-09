@@ -1,4 +1,6 @@
-{
+{   
+    "are_you_sure": "Are you sure",
+    "search": "Search", 
     "crontab": {
         "title": "Cron table",
         "actions": "Actions",
@@ -51,7 +53,18 @@
         "EachXHour": "Run for every X hours",
         "EachXDay": "Run for every X days",
         "EachXMonth": "Run for every X months",
-        "EachXWeekDay": "Run for every X day of weeks"
+        "EachXWeekDay": "Run for every X day of weeks",
+        "job_deleted_ok": "The job has been well deleted",
+        "job_deleted_error": "The job has not well be deleted",
+        "job_updated_ok": "The job has been well updated",
+        "job_created_ok": "The job has been well created",
+        "job_updated_error": "The job has been not well updated",
+        "job_created_error": "The job has been not well created",
+        "delete_job": "Do you want to delete the job"
+    },
+    "validation": {
+      "validation_failed": "The validation has been failed",
+      "valid_username": "This field must be a valid username"
     },
     "about": {
         "title": "About",
