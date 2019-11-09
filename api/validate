@@ -56,7 +56,9 @@ $cmd = $data['action'];
     $v->declareParameter('Day', $days);
     $v->declareParameter('Month', $months);
     $v->declareParameter('WeekDay', $weekday);
-    $v->declareParameter('User', $userNameValidator);
+    if ($data['Advanced'] === 'disabled') {
+        $v->declareParameter('User', $userNameValidator);
+    }
     $v->declareParameter('Cmd',  Validate::NOTEMPTY);
     $v->declareParameter('status', Validate::SERVICESTATUS);
     $v->declareParameter('Mail', Validate::SERVICESTATUS);
@@ -74,7 +76,9 @@ $cmd = $data['action'];
     $v->declareParameter('EachXWeekDay', $eachX);
 
     $v->declareParameter('AdvancedCron', Validate::ANYTHING);
-    $v->declareParameter('AdvancedUser', Validate::ANYTHING);
+    if ($data['Advanced'] === 'enabled') {
+        $v->declareParameter('AdvancedUser', $userNameValidator);
+    }
     $v->declareParameter('Advanced', Validate::SERVICESTATUS);
 
 # Validate the input
