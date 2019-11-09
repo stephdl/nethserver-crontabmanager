@@ -60,7 +60,8 @@
         "job_created_ok": "The job has been well created",
         "job_updated_error": "The job has been not well updated",
         "job_created_error": "The job has been not well created",
-        "delete_job": "Do you want to delete the job"
+        "delete_job": "Do you want to delete the job",
+        "Job_Owner": "Job owner"
     },
     "validation": {
       "validation_failed": "The validation has been failed",
