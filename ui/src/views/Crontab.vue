@@ -120,6 +120,7 @@
               <div class="list-view-pf-description">
                 <div class="list-group-item-heading">{{m.name}}</div>
                 <div class="list-group-item-text">{{$t('crontab.mode')}} {{(m.Advanced === 'enabled') ? $t('crontab.advanced'): $t('crontab.simplified') }}</div>
+                <div class="list-group-item-text">{{$t('crontab.Job_Owner')}} : {{(m.Advanced === 'enabled') ? m.AdvancedUser : m.User}}</div>
               </div>
               <div class="list-view-pf-additional-info rules-info"></div>
             </div>
