@@ -65,7 +65,10 @@
     },
     "validation": {
       "validation_failed": "The validation has been failed",
-      "valid_username": "This field must be a valid username"
+      "valid_username": "This field must be a valid username",
+      "Bad_Command_Line": "This is a bad command line, the reason is",
+      "cron_already_exists": "This cron job name already exists",
+      "cron_not_found":"This cron job has not been found"
     },
     "about": {
         "title": "About",

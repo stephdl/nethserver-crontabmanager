@@ -580,7 +580,7 @@
                   <span
                     v-if="currentCrontab.errors.Cmd.hasError"
                     class="help-block"
-                  >{{$t('validation.validation_failed')}}: {{$t('validation.'+currentCrontab.errors.Cmd.message)}}</span>
+                  >{{$t('validation.validation_failed')}}: {{$t('validation.'+currentCrontab.errors.Cmd.message)}} : {{currentCrontab.errors.Cmd.value}}</span>
                 </div>
               </div>
               <div
@@ -1002,8 +1002,8 @@ export default {
             for (var e in errorData.attributes) {
               var attr = errorData.attributes[e];
               context.currentCrontab.errors[attr.parameter].hasError = true;
-              context.currentCrontab.errors[attr.parameter].message =
-                attr.error;
+              context.currentCrontab.errors[attr.parameter].message = attr.error;
+              context.currentCrontab.errors[attr.parameter].value = attr.value;
               context.$forceUpdate();
             }
           } catch (e) {
