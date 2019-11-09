@@ -26,11 +26,11 @@ $cmd = $data['action'];
     $cdb = new EsmithDatabase('crontab');
     if ($data['action'] == 'update') {
         if (!$cdb->getKey($data['name'])) {
-            $v->addValidationError('name', 'user_not_found');
+            $v->addValidationError('name', 'cron_not_found');
         }
     } else if ($data['action'] == 'create') {
         if ($cdb->getKey($data['name'])) {
-            $v->addValidationError('name', 'user_already_exists');
+            $v->addValidationError('name', 'cron_already_exists');
         }
     }
 
@@ -59,7 +59,6 @@ $cmd = $data['action'];
     if ($data['Advanced'] === 'disabled') {
         $v->declareParameter('User', $userNameValidator);
     }
-    $v->declareParameter('Cmd',  Validate::NOTEMPTY);
     $v->declareParameter('status', Validate::SERVICESTATUS);
     $v->declareParameter('Mail', Validate::SERVICESTATUS);
 
@@ -78,6 +77,18 @@ $cmd = $data['action'];
     $v->declareParameter('AdvancedCron', Validate::ANYTHING);
     if ($data['Advanced'] === 'enabled') {
         $v->declareParameter('AdvancedUser', $userNameValidator);
+    }
+    # escape command line
+    $escaped_command = escapeshellcmd($data['Cmd']);
+    # we want to avoid to have a second cron from the CL with administrators users
+    if (
+          (preg_match('/(root\s|admin\s|administrator\s)/i',$escaped_command, $matches)) ||
+          (preg_match('/\s(\d\-\d)\s/',$escaped_command, $matches)) ||
+          (preg_match('/\s(\d\,\d)\s/',$escaped_command, $matches)) ||
+          (preg_match('/\\n/',$escaped_command, $matches)) || 
+          (preg_match('/\\\/',$escaped_command, $matches)) 
+       ) {
+        $v->addValidationError('Cmd','Bad_Command_Line', $matches);  
     }
     $v->declareParameter('Advanced', Validate::SERVICESTATUS);
 
