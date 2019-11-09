@@ -1,0 +1,13 @@
+#
+# API delegation for crontabmanager
+#
+
+Cmnd_Alias NSAPI_NETHSERVER_CRONTABMANAGER = \
+    /usr/libexec/nethserver/api/nethserver-crontabmanager/create, \
+    /usr/libexec/nethserver/api/nethserver-crontabmanager/delete, \
+    /usr/libexec/nethserver/api/nethserver-crontabmanager/read, \
+    /usr/libexec/nethserver/api/nethserver-crontabmanager/update, \
+    /usr/libexec/nethserver/api/nethserver-crontabmanager/validate
+
+# server-manager does not require a tty
+Defaults!NSAPI_NETHSERVER_CRONTABMANAGER !requiretty

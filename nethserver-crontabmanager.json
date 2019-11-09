@@ -1,0 +1,23 @@
+{
+    "id": "nethserver-crontabmanager",
+    "name": "Crontab manager",
+    "summary": "Nethserver integration of crontab manager",
+    "description": "Nethserver integration of crontab manager",
+    "url": "",
+    "homepage": "https://github.com/stephdl/nethserver-crontabmanager",
+    "provides": ["nethserver-crontabmanager"],
+    "release": {
+        "version": "_RELEASE_"
+    },
+    "tags": ["tag1", "tag2", "tag3"],
+    "license": "GPL-3.0",
+    "bugs": {
+        "url": "https://github.com/stephdl/dev/issues"
+    },
+    "author": {
+        "name": "stephdl",
+        "url": "https://github.com/stephdl/nethserver-crontabmanager",
+        "email": "stephdl@de-labrusse.fr"
+    },
+    "icon": "logo.png"
+}

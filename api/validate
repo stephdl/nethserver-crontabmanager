@@ -1,0 +1,89 @@
+#!/usr/bin/php
+<?php
+/*
+ * Copyright (C) 2019 Nethesis S.r.l.
+ * http://www.nethesis.it - nethserver@nethesis.it
+ *
+ * This script is part of NethServer.
+ *
+ * NethServer is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or any later version.
+ *
+ * NethServer is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with NethServer.  If not, see COPYING.
+*/
+require_once("/usr/libexec/nethserver/api/lib/Helpers.php");
+$data = readInput();
+$v = new LegacyValidator($data);
+$cmd = $data['action'];
+    $cdb = new EsmithDatabase('crontab');
+    if ($data['action'] == 'update') {
+        if (!$cdb->getKey($data['name'])) {
+            $v->addValidationError('name', 'user_not_found');
+        }
+    } else if ($data['action'] == 'create') {
+        if ($cdb->getKey($data['name'])) {
+            $v->addValidationError('name', 'user_already_exists');
+        }
+    }
+
+    # validator routines
+    $userNameValidator = $v->createValidator(Validate::USERNAME)->platform('user-create');
+    $minutes = $v->createValidator()->orValidator($v->createValidator()->memberOf('*'),
+            $v->createValidator()->integer()->lessThan(60));
+    $hours = $v->createValidator()->orValidator($v->createValidator()->memberOf('*'),
+            $v->createValidator()->integer()->lessThan(24));
+    $days = $v->createValidator()->orValidator($v->createValidator()->memberOf('*'),
+            $v->createValidator()->integer()->greatThan(0)->lessThan(32));
+    $months =  $v->createValidator()->memberOf(array('*','1m','2m', '3m',
+            '4m','5m','6m','7m','8m','9m','10m','11m','12m'));
+    $weekday = $v->createValidator()->memberOf(array('*','1w','2w','3w',
+            '4w','5w','6w','7w'));
+    $every = $v->createValidator()->memberOf('*','disabled');
+    $eachX = $v->createValidator()->memberOf('*/','disabled');
+
+    # Validators
+    $v->declareParameter('name', $userNameValidator);
+    $v->declareParameter('Minute', $minutes);
+    $v->declareParameter('Hour', $hours);
+    $v->declareParameter('Day', $days);
+    $v->declareParameter('Month', $months);
+    $v->declareParameter('WeekDay', $weekday);
+    if ($data['Advanced'] === 'disabled') {
+        $v->declareParameter('User', $userNameValidator);
+    }
+    $v->declareParameter('Cmd',  Validate::NOTEMPTY);
+    $v->declareParameter('status', Validate::SERVICESTATUS);
+    $v->declareParameter('Mail', Validate::SERVICESTATUS);
+
+    $v->declareParameter('EveryMinute', $every);
+    $v->declareParameter('EveryHour', $every);
+    $v->declareParameter('EveryDay', $every);
+    $v->declareParameter('EveryMonth', $every);
+    $v->declareParameter('EveryWeekDay', $every);
+
+    $v->declareParameter('EachXMinute', $eachX);
+    $v->declareParameter('EachXHour', $eachX);
+    $v->declareParameter('EachXDay', $eachX);
+    $v->declareParameter('EachXMonth', $eachX);
+    $v->declareParameter('EachXWeekDay', $eachX);
+
+    $v->declareParameter('AdvancedCron', Validate::ANYTHING);
+    if ($data['Advanced'] === 'enabled') {
+        $v->declareParameter('AdvancedUser', $userNameValidator);
+    }
+    $v->declareParameter('Advanced', Validate::SERVICESTATUS);
+
+# Validate the input
+if ($v->validate()) {
+    success();
+} else {
+    error($v);
+}

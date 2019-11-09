@@ -7,3 +7,7 @@ source_lang = en
 type = PHP_ALT_ARRAY
 
 
+[nethserver.CockpitEmptyVueJS]
+source_file = ui/public/i18n/language.json
+source_lang = en
+type = KEYVALUEJSON
