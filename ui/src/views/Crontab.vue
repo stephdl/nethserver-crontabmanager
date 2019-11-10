@@ -537,7 +537,7 @@
             <span
               v-if="currentCrontab.errors.AdvancedCron.hasError"
               class="help-block"
-            >{{$t('validation.validation_failed')}}: {{$t('validation.'+currentCrontab.errors.AdvancedCron.message)}}</span>
+            >{{$t('validation.validation_failed')}}: {{$t('validation.'+currentCrontab.errors.AdvancedCron.message)}} : {{currentCrontab.errors.AdvancedCron.value}}</span>
           </div>
         </div>
         <div v-if="currentCrontab.Advanced ==='enabled'  &&  view.isAdmin"

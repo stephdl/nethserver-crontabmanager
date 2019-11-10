@@ -74,10 +74,18 @@ $cmd = $data['action'];
     $v->declareParameter('EachXMonth', $eachX);
     $v->declareParameter('EachXWeekDay', $eachX);
 
-    $v->declareParameter('AdvancedCron', Validate::ANYTHING);
     if ($data['Advanced'] === 'enabled') {
         $v->declareParameter('AdvancedUser', $userNameValidator);
     }
+    if (
+      (preg_match('/[A-Za-z]+/',$data['AdvancedCron'], $matches)) ||
+      (preg_match('/(;|\"|\||#|\')/',$data['AdvancedCron'], $matches)) ||
+      (preg_match('/\\n/',$data['AdvancedCron'], $matches)) ||
+      (preg_match('/\\\/',$data['AdvancedCron'], $matches))
+    ) {
+        $v->addValidationError('AdvancedCron','Bad_cron', $matches);
+    }
+
     # escape command line
     $escaped_command = escapeshellcmd($data['Cmd']);
     # we want to avoid to have a second cron from the CL with administrators users
