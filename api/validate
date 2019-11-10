@@ -83,8 +83,8 @@ $cmd = $data['action'];
     # we want to avoid to have a second cron from the CL with administrators users
     if (
           (preg_match('/(root\s|admin\s|administrator\s)/i',$escaped_command, $matches)) ||
-          (preg_match('/\s(\d\-\d)\s/',$escaped_command, $matches)) ||
-          (preg_match('/\s(\d\,\d)\s/',$escaped_command, $matches)) ||
+          (preg_match('/(\d\-\d)\s/',$escaped_command, $matches)) ||
+          (preg_match('/(\d\,\d)\s/',$escaped_command, $matches)) ||
           (preg_match('/\\n/',$escaped_command, $matches)) || 
           (preg_match('/\\\/',$escaped_command, $matches)) 
        ) {

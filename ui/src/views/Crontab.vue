@@ -505,7 +505,7 @@
             for="textInput-modal-markup"
           >{{$t('crontab.User')}}</label>
           <div :class="'col-sm-9'">
-            <input
+            <input v-if="view.isAdmin"
               :disabled="!view.isAdmin"
               required
               placeholder="User"
@@ -513,6 +513,7 @@
               v-model="currentCrontab.User"
               class="form-control"
             >
+            <span v-else>{{currentCrontab.User}}</span>
             <span
               v-if="currentCrontab.errors.User.hasError"
               class="help-block"
