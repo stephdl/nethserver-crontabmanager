@@ -69,7 +69,18 @@
       "Bad_Command_Line": "This command line is not allowed",
       "cron_already_exists": "This cron job name already exists",
       "cron_not_found":"This cron job has not been found",
-      "Bad_cron": "This time value is not allowed"
+      "Bad_cron": "This time value is not allowed",
+      "name": "This name value is not allowed",
+      "Minute": "This minute value is not allowed",
+      "EachXMinute": "This each minute value is not allowed",
+      "Hour": "This hour value is not allowed",
+      "EachXHour": "This each hour value is not allowed",
+      "Day": "This day value is not allowed",
+      "EachXDay": "This day of month value is not allowed",
+      "Month": "This month value is not allowed",
+      "EachXMonth": "This each month value is not allowed",
+      "WeekDay": "This day of week value is not allowed",
+      "EachXWeekDay": "This each day of week value is not allowed"
     },
     "about": {
         "title": "About",
