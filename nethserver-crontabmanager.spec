@@ -1,6 +1,6 @@
 Summary: NethServer configuration for crontab
 %define name nethserver-crontabmanager
-%define version 0.2.1
+%define version 1.0.0
 %define release 1
 Name: %{name}
 Version: %{version}
@@ -57,6 +57,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_nsdbconfdir}/crontab
 
 %changelog
+* Sun Feb 09 2020 stephane de Labrusse <stephdl@de-labrusse.fr> 1.0.0-1.ns7
+- Better log display with Regexp
+
 * Sat Nov 23 2019 Stephane de Labrusse <stephdl@de-labrusse.fr> 0.2.1-1.ns7
 - Unused Dashboard.vue removed
 - About url point to stephdl github
