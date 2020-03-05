@@ -1,6 +1,6 @@
 Summary: NethServer configuration for crontab
 %define name nethserver-crontabmanager
-%define version 1.0.0
+%define version 1.0.1
 %define release 1
 Name: %{name}
 Version: %{version}
@@ -55,8 +55,12 @@ rm -rf $RPM_BUILD_ROOT
 %doc COPYING
 %dir %{_nseventsdir}/%{name}-update
 %dir %{_nsdbconfdir}/crontab
+%attr(0440,root,root) /etc/sudoers.d/50_nsapi_nethserver_crontabmanager
 
 %changelog
+* Thu Mar 05 2020  stephane de Labrusse <stephdl@de-labrusse.fr> 1.0.1-1.ns7
+- Fix bad sudoers permission
+
 * Sun Feb 09 2020 stephane de Labrusse <stephdl@de-labrusse.fr> 1.0.0-1.ns7
 - Better log display with Regexp
 
