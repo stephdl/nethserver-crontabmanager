@@ -94,5 +94,8 @@
       "start_follow_button": "Follow",
       "stop_follow_button": "Stop following",
       "filter_label": "Regexp filter"
+    }, 
+    "docs": {
+      "CommandLineTricks": "The validation of this field could block you to use a complex command line. If you need it, then create a bash file in the home of the user with your need, 'chmod u+x /path/2/file' and write the full path of the bash file in 'The command of the job' field"
     }
 }

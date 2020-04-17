@@ -569,7 +569,14 @@
                 <label
                   :class="['col-sm-3', 'control-label']"
                   for="textInput-modal-markup"
-                >{{$t('crontab.Cmd')}}</label>
+                >{{$t('crontab.Cmd')}}
+                <doc-info
+                  :placement="'right'"
+                  :title="$t('crontab.Cmd')"
+                  :chapter="'CommandLineTricks'"
+                  :inline="true"
+                ></doc-info>
+                </label>
                 <div :class="'col-sm-9'">
                   <input
                     required
