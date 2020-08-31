@@ -29,7 +29,7 @@
         "each_Hour": "Run every hour (*)",
         "each_Day": "Run every day (*)",
         "each_Month": "Run every month (*)",
-        "each_WeekDay": "Run every week of day (*)",
+        "each_WeekDay": "Run every day of the week (*)",
         "january": "January",
         "february":"February",
         "march" : "March",
